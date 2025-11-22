@@ -705,10 +705,10 @@
             <div class="tutorial-step" data-step="2">
                 <h2>GitHub Setup 🔧</h2>
                 
-                <h3>📋 Required</h3>
+                <h3>📋 First: Connect GitHub</h3>
                 <ol>
-                    <li><strong>GitHub Repository:</strong> Create a new private repository (e.g., "our-space-data")</li>
-                    <li><strong>Personal Access Token (PAT):</strong>
+                    <li><strong>Create Repository:</strong> Make a new private GitHub repository (e.g., "our-space-data")</li>
+                    <li><strong>Generate PAT:</strong>
                         <ul>
                             <li>Go to github.com/settings/tokens</li>
                             <li>Click "Generate new token (classic)"</li>
@@ -716,10 +716,20 @@
                             <li>Generate and copy token</li>
                         </ul>
                     </li>
+                    <li><strong>Enter Credentials:</strong> Provide repo name and token on first screen</li>
                 </ol>
 
+                <h3>👤 Then: Choose Username</h3>
+                <p>After GitHub connection is verified:</p>
+                <ul>
+                    <li>Enter your desired username</li>
+                    <li>If username exists in the repo → Login automatically</li>
+                    <li>If username doesn't exist → Account created automatically</li>
+                    <li>Credentials saved locally for future logins</li>
+                </ul>
+
                 <h3>🔐 Master File System</h3>
-                <p>A <code>master_user_{username}.txt</code> file is automatically created in your repo containing:</p>
+                <p>A <code>master_user_{username}.txt</code> file is automatically created containing:</p>
                 <ul>
                     <li>All rooms you've created</li>
                     <li>All rooms you've joined</li>
@@ -731,7 +741,7 @@
                 <ul>
                     <li>Keep your PAT secret - never share it</li>
                     <li>Use the SAME repo + PAT on all devices</li>
-                    <li>Partners can use their own repos or share yours</li>
+                    <li>Both partners can use same repo OR separate repos</li>
                 </ul>
                 
                 <div class="tutorial-navigation">
@@ -741,40 +751,39 @@
             </div>
 
             <div class="tutorial-step" data-step="3">
-                <h2>User System 👤</h2>
+                <h2>Login Flow 🔄</h2>
                 
-                <h3>🆕 First Time Login</h3>
-                <p>When you enter a username that doesn't exist:</p>
+                <h3>🚀 First Time Setup</h3>
                 <ol>
-                    <li>System asks if you want to create this user</li>
-                    <li>Enter GitHub repo and PAT</li>
-                    <li>Credentials saved to browser (not shared)</li>
-                    <li>Master file created in your repo</li>
+                    <li><strong>Step 1:</strong> Enter GitHub repo and PAT</li>
+                    <li><strong>Step 2:</strong> System verifies connection</li>
+                    <li><strong>Step 3:</strong> Choose username</li>
+                    <li><strong>Step 4:</strong> Master file created automatically</li>
+                    <li><strong>Step 5:</strong> Ready to create/join rooms!</li>
                 </ol>
 
                 <h3>🔄 Returning User</h3>
-                <p>When logging in with existing username:</p>
+                <p>If you've used the app before on this browser:</p>
                 <ul>
-                    <li>Loads your master file from GitHub</li>
-                    <li>Shows all your rooms</li>
-                    <li>Syncs latest data</li>
-                    <li>No password needed - secured by PAT</li>
+                    <li>GitHub credentials auto-loaded from browser</li>
+                    <li>Just enter your username</li>
+                    <li>Loads your master file</li>
+                    <li>Shows all your rooms instantly</li>
                 </ul>
 
-                <h3>👥 Joining Rooms</h3>
+                <h3>💻 Multiple Devices</h3>
+                <p>To use on another device:</p>
                 <ol>
-                    <li>Get room code from friend/partner (6 characters)</li>
-                    <li>Enter room code</li>
-                    <li>Admin receives join request</li>
-                    <li>Admin approves/denies</li>
-                    <li>If approved, room added to your master file</li>
+                    <li>Enter same GitHub repo and PAT</li>
+                    <li>Enter same username</li>
+                    <li>All rooms sync automatically</li>
                 </ol>
 
-                <h3>🔗 Sharing Repos</h3>
+                <h3>🔗 Shared vs Separate Repos</h3>
                 <ul>
-                    <li><strong>Option 1:</strong> Each person uses their own repo</li>
-                    <li><strong>Option 2:</strong> Share same repo (both use same repo + PAT)</li>
-                    <li>Room data always stored in creator's repo</li>
+                    <li><strong>Shared Repo:</strong> Both partners use SAME repo/PAT → instant sync</li>
+                    <li><strong>Separate Repos:</strong> Each person uses OWN repo → creator's repo stores room data</li>
+                    <li>Room data always stored in creator's repository</li>
                 </ul>
                 
                 <div class="tutorial-navigation">
@@ -932,32 +941,17 @@
             <h1>Our Space 💕</h1>
             <p>Your personal GitHub-powered memory vault</p>
             
-            <!-- Login Form -->
-            <div id="loginForm">
-                <h2>Enter Username</h2>
-                
-                <div class="form-group">
-                    <label for="loginUsername">Username</label>
-                    <input type="text" id="loginUsername" placeholder="your_username" maxlength="30">
-                    <div class="form-help">If username doesn't exist, you'll be asked to create it</div>
-                </div>
-                
-                <div id="loginAlert"></div>
-                
-                <button class="btn primary" onclick="checkUsername()">Continue</button>
-            </div>
-
-            <!-- GitHub Setup Form -->
-            <div id="githubSetupForm" class="hidden">
-                <h2>Setup Your GitHub Connection</h2>
+            <!-- GitHub Setup Form (First Step) -->
+            <div id="githubSetupForm">
+                <h2>Connect Your GitHub</h2>
                 <p style="margin-bottom: 1rem; color: var(--text-light);">
-                    Username "<span id="newUsername"></span>" doesn't exist. Let's create it!
+                    First, let's connect to your GitHub repository where all your data will be stored.
                 </p>
                 
                 <div class="form-group">
                     <label for="githubRepo">GitHub Repository *</label>
                     <input type="text" id="githubRepo" placeholder="username/repository-name">
-                    <div class="form-help">Format: your-github-username/repo-name</div>
+                    <div class="form-help">Format: your-github-username/repo-name (e.g., john/our-space-data)</div>
                 </div>
                 
                 <div class="form-group">
@@ -972,9 +966,27 @@
                 
                 <div id="setupAlert"></div>
                 
+                <button class="btn primary" onclick="verifyGitHubConnection()">Connect & Continue</button>
+            </div>
+
+            <!-- Login Form (After GitHub Connection) -->
+            <div id="loginForm" class="hidden">
+                <h2>Enter Username</h2>
+                <p style="margin-bottom: 1rem; color: var(--text-light);">
+                    GitHub connected! Now choose your username.
+                </p>
+                
+                <div class="form-group">
+                    <label for="loginUsername">Username</label>
+                    <input type="text" id="loginUsername" placeholder="your_username" maxlength="30">
+                    <div class="form-help">3-30 characters, lowercase letters, numbers, periods, underscores</div>
+                </div>
+                
+                <div id="loginAlert"></div>
+                
                 <div style="display: flex; gap: 1rem; justify-content: center;">
-                    <button class="btn" onclick="backToLogin()">Back</button>
-                    <button class="btn primary" onclick="createNewUser()">Create Account</button>
+                    <button class="btn" onclick="backToGitHubSetup()">Back</button>
+                    <button class="btn primary" onclick="checkUsername()">Continue</button>
                 </div>
             </div>
 
@@ -1409,53 +1421,7 @@
         }
 
         // User Management
-        async function checkUsername() {
-            const username = document.getElementById('loginUsername').value.trim().toLowerCase();
-            
-            if (!username) {
-                showAlert('Please enter a username', 'error', 'loginAlert');
-                return;
-            }
-
-            if (username.length < 3 || username.length > 30) {
-                showAlert('Username must be 3-30 characters', 'error', 'loginAlert');
-                return;
-            }
-
-            if (!/^[a-z0-9._]+$/.test(username)) {
-                showAlert('Username can only contain lowercase letters, numbers, periods, and underscores', 'error', 'loginAlert');
-                return;
-            }
-
-            showLoading(true);
-
-            // Check if user has GitHub config in localStorage
-            const storedConfig = localStorage.getItem(`github_${username}`);
-            
-            if (storedConfig) {
-                // Existing user - load their data
-                userGithubConfig = JSON.parse(storedConfig);
-                currentUser = { username: username };
-                
-                try {
-                    await loadUserMasterFile();
-                    showLoading(false);
-                    showRoomDashboard();
-                } catch (error) {
-                    showLoading(false);
-                    showAlert('Failed to load user data. Check your GitHub credentials.', 'error', 'loginAlert');
-                }
-            } else {
-                // New user - show GitHub setup
-                showLoading(false);
-                document.getElementById('newUsername').textContent = username;
-                document.getElementById('loginForm').classList.add('hidden');
-                document.getElementById('githubSetupForm').classList.remove('hidden');
-            }
-        }
-
-        async function createNewUser() {
-            const username = document.getElementById('loginUsername').value.trim().toLowerCase();
+        async function verifyGitHubConnection() {
             const repo = document.getElementById('githubRepo').value.trim();
             const token = document.getElementById('githubToken').value.trim();
 
@@ -1486,23 +1452,106 @@
                     return;
                 }
 
-                // Save GitHub config
+                // Save GitHub config temporarily (will be saved with username later)
                 userGithubConfig = { repo, token };
-                localStorage.setItem(`github_${username}`, JSON.stringify(userGithubConfig));
+
+                showLoading(false);
+                showAlert('GitHub connection successful!', 'success', 'setupAlert');
                 
-                currentUser = { username };
+                setTimeout(() => {
+                    document.getElementById('githubSetupForm').classList.add('hidden');
+                    document.getElementById('loginForm').classList.remove('hidden');
+                }, 1000);
+
+            } catch (error) {
+                showLoading(false);
+                showAlert('Failed to connect to GitHub. Please try again.', 'error', 'setupAlert');
+                console.error('GitHub connection error:', error);
+            }
+        }
+
+        function backToGitHubSetup() {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('githubSetupForm').classList.remove('hidden');
+            document.getElementById('loginUsername').value = '';
+            document.getElementById('loginAlert').innerHTML = '';
+        }
+
+        async function checkUsername() {
+            const username = document.getElementById('loginUsername').value.trim().toLowerCase();
+            
+            if (!username) {
+                showAlert('Please enter a username', 'error', 'loginAlert');
+                return;
+            }
+
+            if (username.length < 3 || username.length > 30) {
+                showAlert('Username must be 3-30 characters', 'error', 'loginAlert');
+                return;
+            }
+
+            if (!/^[a-z0-9._]+$/.test(username)) {
+                showAlert('Username can only contain lowercase letters, numbers, periods, and underscores', 'error', 'loginAlert');
+                return;
+            }
+
+            showLoading(true);
+
+            try {
+                // Check if user master file exists
+                const fileName = `master_user_${username}.txt`;
+                const fileData = await loadFromGitHub(fileName);
+                
+                if (fileData) {
+                    // Existing user
+                    currentUser = { username };
+                    userMasterData = fileData.content;
+                    
+                    // Save GitHub config for this user
+                    localStorage.setItem(`github_${username}`, JSON.stringify(userGithubConfig));
+                    
+                    showLoading(false);
+                    showAlert('Welcome back!', 'success', 'loginAlert');
+                    
+                    setTimeout(() => {
+                        showRoomDashboard();
+                    }, 1000);
+                } else {
+                    // New user - create account
+                    await createNewUser(username);
+                }
+
+            } catch (error) {
+                showLoading(false);
+                showAlert('Failed to load user data. Please try again.', 'error', 'loginAlert');
+                console.error('Check username error:', error);
+            }
+        }
+
+        async function createNewUser(username = null) {
+            const user = username || document.getElementById('loginUsername').value.trim().toLowerCase();
+
+            if (!user) return;
+
+            showLoading(true);
+
+            try {
+                currentUser = { username: user };
 
                 // Create master file
                 userMasterData = {
-                    username: username,
+                    username: user,
                     created: new Date().toISOString(),
                     rooms: []
                 };
 
                 await saveUserMasterFile();
 
+                // Save GitHub config for this user
+                localStorage.setItem(`github_${user}`, JSON.stringify(userGithubConfig));
+
                 showLoading(false);
-                showAlert('Account created successfully!', 'success', 'setupAlert');
+                showAlert('Account created successfully!', 'success', 'loginAlert');
                 
                 setTimeout(() => {
                     showRoomDashboard();
@@ -1510,15 +1559,9 @@
 
             } catch (error) {
                 showLoading(false);
-                showAlert('Failed to create account. Please try again.', 'error', 'setupAlert');
+                showAlert('Failed to create account. Please try again.', 'error', 'loginAlert');
                 console.error('Create user error:', error);
             }
-        }
-
-        function backToLogin() {
-            document.getElementById('githubSetupForm').classList.add('hidden');
-            document.getElementById('loginForm').classList.remove('hidden');
-            document.getElementById('loginUsername').value = '';
         }
 
         async function loadUserMasterFile() {

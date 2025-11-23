@@ -1,4 +1,959 @@
-<!DOCTYPE html>
+<div class="tutorial-step active" data-step="1">
+                <h2>Welcome to Our Space! 💕</h2>
+                <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">A decentralized platform for couples and friends to share memories, powered by YOUR GitHub repository.</p>
+                
+                <h3>🎯 What Makes This Special?</h3>
+                <ul style="line-height: 1.8;">
+                    <li><strong>🔐 Your Data, Your Control:</strong> Everything stored in YOUR private GitHub repository - no third-party servers</li>
+                    <li><strong>🌐 No Central Server:</strong> Direct connection between your browser and GitHub API</li>
+                    <li><strong>🏠 Multiple Rooms:</strong> Create unlimited rooms for different relationships</li>
+                    <li><strong>💕 Room Types:</strong> Choose between Love rooms (for couples) or Friendship rooms (for friends)</li>
+                    <li><strong>⚡ Real-time Sync:</strong> All changes sync every 1.5 seconds across all devices</li>
+                    <li><strong>📱 Cross-Device:</strong> Access from any device using the same credentials</li>
+                    <li><strong>🔒 Privacy First:</strong> End-to-end control - only you and your partner(s) can access data</li>
+                </ul>
+
+                <h3>✨ Core Features</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
+                    <div>
+                        <strong>📸 Memories</strong>
+                        <p style="font-size: 0.9rem; margin-top: 0.25rem;">Photos with descriptions and dates</p>
+                    </div>
+                    <div>
+                        <strong>🔗 Links</strong>
+                        <p style="font-size: 0.9rem; margin-top: 0.25rem;">Save and share URLs together</p>
+                    </div>
+                    <div>
+                        <strong>📝 Notes</strong>
+                        <p style="font-size: 0.9rem; margin-top: 0.25rem;">Write sweet messages with images</p>
+                    </div>
+                    <div>
+                        <strong>💬 Chat</strong>
+                        <p style="font-size: 0.9rem; margin-top: 0.25rem;">Private messaging in each room</p>
+                    </div>
+                    <div>
+                        <strong>👥 Join Requests</strong>
+                        <p style="font-size: 0.9rem; margin-top: 0.25rem;">Admin approval for new members</p>
+                    </div>
+                    <div>
+                        <strong>🏷️ Custom Names</strong>
+                        <p style="font-size: 0.9rem; margin-top: 0.25rem;">Name and rename your rooms</p>
+                    </div>
+                </div>
+                
+                <div class="tutorial-navigation">
+                    <div></div>
+                    <button class="btn primary" onclick="nextTutorialStep()">Next: GitHub Setup →</button>
+                </div>
+            </div>
+
+            <div class="tutorial-step" data-step="2">
+                <h2>GitHub Setup Guide 🔧</h2>
+                <p style="margin-bottom: 1.5rem;">Follow these detailed steps to set up your GitHub repository and connect it to Our Space.</p>
+                
+                <h3>📦 Step 1: Create GitHub Repository</h3>
+                <ol style="line-height: 1.8;">
+                    <li>Go to <strong>github.com</strong> and log in to your account</li>
+                    <li>Click the <strong>"+"</strong> icon in the top-right corner</li>
+                    <li>Select <strong>"New repository"</strong></li>
+                    <li>Enter a repository name (e.g., <code>our-space-data</code>)</li>
+                    <li><strong>⚠️ IMPORTANT:</strong> Select <strong>"Private"</strong> to keep your data secure</li>
+                    <li>Leave "Initialize with README" <strong>unchecked</strong></li>
+                    <li>Click <strong>"Create repository"</strong></li>
+                    <li>Note your repository name format: <code>your-username/our-space-data</code></li>
+                </ol>
+
+                <h3>🔑 Step 2: Generate Personal Access Token (PAT)</h3>
+                <ol style="line-height: 1.8;">
+                    <li>Go to <strong>github.com/settings/tokens</strong></li>
+                    <li>Click <strong>"Generate new token"</strong> dropdown</li>
+                    <li>Select <strong>"Generate new token (classic)"</strong></li>
+                    <li>Enter a note/name: <code>Our Space App</code></li>
+                    <li>Set expiration: Choose <strong>"No expiration"</strong> or your preferred duration</li>
+                    <li><strong>⚠️ CRITICAL:</strong> Under "Select scopes", check <strong>"repo"</strong> (this will select all sub-options)</li>
+                    <li>Scroll down and click <strong>"Generate token"</strong></li>
+                    <li><strong>🔴 IMPORTANT:</strong> Copy the token immediately (format: <code>ghp_xxxxxxxxxxxxx</code>)</li>
+                    <li>Save it somewhere safe - you won't be able to see it again!</li>
+                </ol>
+
+                <h3>💾 What Gets Stored in Your Repo?</h3>
+                <ul style="line-height: 1.8;">
+                    <li><code>master_user_{username}.txt</code> - Your room list and quick access data</li>
+                    <li><code>{ROOMCODE}_master.txt</code> - Index file for each room</li>
+                    <li><code>{ROOMCODE}_1.txt, _2.txt...</code> - Room data files (split automatically at 50MB)</li>
+                    <li>All files are JSON format and human-readable</li>
+                    <li>Images stored as base64 inside the files</li>
+                </ul>
+
+                <h3>🔐 Security Notes</h3>
+                <ul style="line-height: 1.8;">
+                    <li><strong>Never share your PAT</strong> with anyone</li>
+                    <li>PAT stored only in your browser's localStorage</li>
+                    <li>Use a strong, unique GitHub password</li>
+                    <li>Enable 2FA on your GitHub account for extra security</li>
+                </ul>
+                
+                <div class="tutorial-navigation">
+                    <button class="btn" onclick="prevTutorialStep()">← Back</button>
+                    <button class="btn primary" onclick="nextTutorialStep()">Next: Login Flow →</button>
+                </div>
+            </div>
+
+            <div class="tutorial-step" data-step="3">
+                <h2>Login & Account Creation 🔄</h2>
+                <p style="margin-bottom: 1.5rem;">Understanding how the login system works and what happens behind the scenes.</p>
+                
+                <h3>🚀 First Time Setup (New User)</h3>
+                <div style="background: #f8f9fa; padding: 1rem; border-radius: 10px; margin: 1rem 0;">
+                    <strong>Step 1: GitHub Connection</strong>
+                    <ol style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li>Open the app - you'll see "Connect Your GitHub" screen</li>
+                        <li>Enter your repository: <code>username/repo-name</code></li>
+                        <li>Paste your Personal Access Token</li>
+                        <li>Click <strong>"Connect & Continue"</strong></li>
+                        <li>System verifies connection (checks if repo is accessible)</li>
+                        <li>Success! Moves to username screen</li>
+                    </ol>
+                </div>
+
+                <div style="background: #f8f9fa; padding: 1rem; border-radius: 10px; margin: 1rem 0;">
+                    <strong>Step 2: Choose Username</strong>
+                    <ol style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li>Enter your desired username (3-30 characters)</li>
+                        <li>Username rules: lowercase, letters, numbers, periods, underscores only</li>
+                        <li>Click <strong>"Continue"</strong></li>
+                        <li>System checks if <code>master_user_{username}.txt</code> exists in your repo</li>
+                        <li>If not found → Creates new account automatically</li>
+                        <li>Creates master file with your username and empty rooms array</li>
+                        <li>Saves credentials to browser localStorage as <code>github_{username}</code></li>
+                        <li>Shows room dashboard - ready to create/join rooms!</li>
+                    </ol>
+                </div>
+
+                <h3>🔄 Returning User (Existing Account)</h3>
+                <div style="background: #e8f5e9; padding: 1rem; border-radius: 10px; margin: 1rem 0;">
+                    <strong>When You Come Back:</strong>
+                    <ol style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li>Enter same repository and PAT (or auto-loaded if saved)</li>
+                        <li>System verifies GitHub connection</li>
+                        <li>Enter your username</li>
+                        <li>System finds your <code>master_user_{username}.txt</code> file</li>
+                        <li>Loads all your rooms and data</li>
+                        <li>Shows room dashboard with all your rooms</li>
+                        <li>Click any room to enter and start using</li>
+                    </ol>
+                </div>
+
+                <h3>💻 Using Multiple Devices</h3>
+                <p style="line-height: 1.8;">To access your rooms on another device:</p>
+                <ol style="line-height: 1.8;">
+                    <li>Open the app on new device</li>
+                    <li>Enter <strong>SAME</strong> GitHub repo and PAT</li>
+                    <li>Enter <strong>SAME</strong> username</li>
+                    <li>All rooms sync automatically</li>
+                    <li>Any changes made sync across all devices every 1.5 seconds</li>
+                </ol>
+
+                <h3>👥 Sharing with Partner/Friend</h3>
+                <div style="background: #fff3cd; padding: 1rem; border-radius: 10px; margin: 1rem 0;">
+                    <strong>Option 1: Shared Repository</strong>
+                    <ul style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li>Both use the SAME GitHub repo and PAT</li>
+                        <li>Both enter DIFFERENT usernames</li>
+                        <li>Creates separate master files for each user</li>
+                        <li>When one creates a room, other can join using room code</li>
+                        <li>✅ Best for instant synchronization</li>
+                    </ul>
+                </div>
+
+                <div style="background: #e3f2fd; padding: 1rem; border-radius: 10px; margin: 1rem 0;">
+                    <strong>Option 2: Separate Repositories</strong>
+                    <ul style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li>Each person uses their OWN GitHub repo and PAT</li>
+                        <li>Room creator's repo stores the room data</li>
+                        <li>Other person needs access to creator's repo to join</li>
+                        <li>✅ More privacy, but requires repo collaboration setup</li>
+                    </ul>
+                </div>
+                
+                <div class="tutorial-navigation">
+                    <button class="btn" onclick="prevTutorialStep()">← Back</button>
+                    <button class="btn primary" onclick="nextTutorialStep()">Next: Rooms →</button>
+                </div>
+            </div>
+
+            <div class="tutorial-step" data-step="4">
+                <h2>Room Types & Features 🏠</h2>
+                <p style="margin-bottom: 1.5rem;">Detailed explanation of Love and Friendship rooms and their unique features.</p>
+                
+                <h3>💕 Love Rooms (For Couples)</h3>
+                <div style="background: linear-gradient(135deg, #ffe6e6, #fff0f5); padding: 1.5rem; border-radius: 15px; margin: 1rem 0; border: 2px solid var(--primary-pink);">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                        <span style="font-size: 3rem;">💕</span>
+                        <div>
+                            <strong style="font-size: 1.2rem;">Designed for romantic relationships</strong>
+                            <p style="font-size: 0.9rem; margin-top: 0.25rem;">Special features for couples</p>
+                        </div>
+                    </div>
+                    
+                    <strong>Available Actions:</strong>
+                    <ul style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li><strong>🏛️ Freeze Room:</strong>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Makes room permanently read-only</li>
+                                <li>No new content can be added</li>
+                                <li>Nothing can be deleted</li>
+                                <li>Preserves memories forever as they are</li>
+                                <li>⚠️ CANNOT be undone - irreversible action</li>
+                                <li>Use case: Preserve relationship memories even after breakup</li>
+                            </ul>
+                        </li>
+                        <li><strong>🚶 Move On:</strong>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Leave the room silently without notification</li>
+                                <li>Your data remains but you lose access</li>
+                                <li>If you're admin, next member becomes admin</li>
+                                <li>If all members leave, room auto-deletes</li>
+                                <li>Use case: Quiet exit after breakup</li>
+                            </ul>
+                        </li>
+                        <li><strong>💔 Breakup (Delete Room):</strong>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Request permanent room deletion</li>
+                                <li>Requires ALL members to agree</li>
+                                <li>Shows status: who agreed, who's pending</li>
+                                <li>Once all agree, room and ALL data deleted forever</li>
+                                <li>⚠️ CANNOT be undone - permanent deletion</li>
+                                <li>Use case: Both parties want fresh start</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    
+                    <div style="background: white; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                        <strong>🎨 Visual Indicators:</strong>
+                        <ul style="margin-top: 0.5rem;">
+                            <li>Pink/purple color scheme</li>
+                            <li>💕 emoji throughout interface</li>
+                            <li>Romantic-themed messaging</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>👫 Friendship Rooms (For Friends)</h3>
+                <div style="background: linear-gradient(135deg, #fff9e6, #fffef0); padding: 1.5rem; border-radius: 15px; margin: 1rem 0; border: 2px solid var(--friendship-yellow);">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                        <span style="font-size: 3rem;">👫</span>
+                        <div>
+                            <strong style="font-size: 1.2rem;">Designed for platonic friendships</strong>
+                            <p style="font-size: 0.9rem; margin-top: 0.25rem;">Simpler, friendship-focused features</p>
+                        </div>
+                    </div>
+                    
+                    <strong>Available Actions:</strong>
+                    <ul style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li><strong>🏛️ Freeze Room:</strong>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Same as love rooms - makes permanently read-only</li>
+                                <li>Preserves friendship memories forever</li>
+                                <li>⚠️ CANNOT be undone</li>
+                                <li>Use case: Preserve memories of past friendship</li>
+                            </ul>
+                        </li>
+                        <li><strong>🚪 Leave Room:</strong>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Clean exit from the room</li>
+                                <li>Other members are notified you left</li>
+                                <li>If you're admin, next member becomes admin</li>
+                                <li>If all members leave, room auto-deletes</li>
+                                <li>Use case: Ending or pausing a friendship connection</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    
+                    <div style="background: white; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                        <strong>🎨 Visual Indicators:</strong>
+                        <ul style="margin-top: 0.5rem;">
+                            <li>Yellow/warm color scheme</li>
+                            <li>👫 emoji throughout interface</li>
+                            <li>Friendship-themed messaging</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #fff3cd; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                        <strong>❌ Not Included:</strong>
+                        <ul style="margin-top: 0.5rem;">
+                            <li>No "Move On" option (use "Leave" instead)</li>
+                            <li>No "Breakup" deletion request</li>
+                            <li>Simpler workflow for friend dynamics</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>🏷️ Room Naming</h3>
+                <ul style="line-height: 1.8;">
+                    <li>Set custom name when creating room (e.g., "Our Adventures", "Best Friends")</li>
+                    <li>Admin can rename anytime from Settings page</li>
+                    <li>Room code (6 characters) never changes</li>
+                    <li>Name displayed in room list and navigation bar</li>
+                    <li>Makes identifying rooms easier when you have many</li>
+                </ul>
+                
+                <div class="tutorial-navigation">
+                    <button class="btn" onclick="prevTutorialStep()">← Back</button>
+                    <button class="btn primary" onclick="nextTutorialStep()">Next: Creating & Joining →</button>
+                </div>
+            </div>
+
+            <div class="tutorial-step" data-step="5">
+                <h2>Creating & Joining Rooms 🚪</h2>
+                <p style="margin-bottom: 1.5rem;">Step-by-step guide for creating new rooms and joining existing ones.</p>
+                
+                <h3>➕ Creating a New Room</h3>
+                <div style="background: #e8f5e9; padding: 1.5rem; border-radius: 15px; margin: 1rem 0;">
+                    <strong>From Room Dashboard:</strong>
+                    <ol style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li>After login, you'll see "Your Rooms" dashboard</li>
+                        <li>Click <strong>"+ Create New Room"</strong> button</li>
+                        <li>Enter a <strong>Room Name</strong> (e.g., "Our Love Story", "Best Friends Forever")</li>
+                        <li>Choose <strong>Room Type</strong>:
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Click <strong>💕 Love Room</strong> for romantic relationships</li>
+                                <li>Click <strong>👫 Friendship</strong> for platonic friendships</li>
+                            </ul>
+                        </li>
+                        <li>Click <strong>"Create Room"</strong></li>
+                        <li>System generates unique 6-character room code</li>
+                        <li>Creates room files in your GitHub repository:
+                            <ul style="margin-top: 0.5rem;">
+                                <li><code>{ROOMCODE}_master.txt</code> - Room index</li>
+                                <li><code>{ROOMCODE}_1.txt</code> - Room data</li>
+                            </ul>
+                        </li>
+                        <li>Adds room to your master file</li>
+                        <li>You become the room admin automatically</li>
+                        <li>Room opens - ready to add content!</li>
+                    </ol>
+                </div>
+
+                <h3>📨 Inviting Others (Sharing Room Code)</h3>
+                <div style="background: #fff3cd; padding: 1.5rem; border-radius: 15px; margin: 1rem 0;">
+                    <strong>How to Share:</strong>
+                    <ol style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li>After creating room, note the 6-character code (shown in success message)</li>
+                        <li>Or go to Settings page to view room code</li>
+                        <li>Share this code with your partner/friend via:
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Text message</li>
+                                <li>Email</li>
+                                <li>In person</li>
+                                <li>Any secure communication method</li>
+                            </ul>
+                        </li>
+                        <li>⚠️ Keep room code private - anyone with code can request to join</li>
+                    </ol>
+                </div>
+
+                <h3>🔗 Joining an Existing Room</h3>
+                <div style="background: #e3f2fd; padding: 1.5rem; border-radius: 15px; margin: 1rem 0;">
+                    <strong>Join Process:</strong>
+                    <ol style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li>Get room code from friend/partner (6 characters)</li>
+                        <li>From room dashboard, click <strong>"Join Room"</strong></li>
+                        <li>Enter the room code (automatically converts to uppercase)</li>
+                        <li>Click <strong>"Request to Join"</strong></li>
+                        <li>System checks if room exists in connected GitHub repo</li>
+                        <li>If found, sends join request to room admin</li>
+                        <li>You'll see "Join request sent!" message</li>
+                        <li>Now wait for admin approval...</li>
+                    </ol>
+                </div>
+
+                <h3>👑 Admin: Approving Join Requests</h3>
+                <div style="background: #f3e5f5; padding: 1.5rem; border-radius: 15px; margin: 1rem 0;">
+                    <strong>Approval Process:</strong>
+                    <ol style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li>When someone requests to join, you'll see:
+                            <ul style="margin-top: 0.5rem;">
+                                <li>🔔 Bell icon appears in top-right corner</li>
+                                <li>Red badge shows number of pending requests</li>
+                            </ul>
+                        </li>
+                        <li>Click the 🔔 bell icon</li>
+                        <li>Modal opens showing all join requests</li>
+                        <li>Each request shows:
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Username of requester</li>
+                                <li>Date/time of request</li>
+                                <li>Two buttons: Approve and Deny</li>
+                            </ul>
+                        </li>
+                        <li><strong>To Approve:</strong>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Click <strong>"Approve"</strong> button</li>
+                                <li>User added to room members list</li>
+                                <li>System message posted in chat: "{username} joined the room"</li>
+                                <li>User's master file updated with room info</li>
+                                <li>They can now access and use the room</li>
+                            </ul>
+                        </li>
+                        <li><strong>To Deny:</strong>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Click <strong>"Deny"</strong> button</li>
+                                <li>Request removed from queue</li>
+                                <li>User receives no notification (silent denial)</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+
+                <h3>⚠️ Important Notes</h3>
+                <ul style="line-height: 1.8;">
+                    <li><strong>Repository Access:</strong> For joining to work:
+                        <ul style="margin-top: 0.5rem;">
+                            <li>Both users must use SAME GitHub repository, OR</li>
+                            <li>Joiner must have access to creator's repository</li>
+                        </ul>
+                    </li>
+                    <li><strong>No Limit:</strong> Create and join unlimited rooms</li>
+                    <li><strong>One Admin:</strong> Room creator is admin (transfers if admin leaves)</li>
+                    <li><strong>Room Codes:</strong> Unique, case-sensitive, 6 characters</li>
+                </ul>
+                
+                <div class="tutorial-navigation">
+                    <button class="btn" onclick="prevTutorialStep()">← Back</button>
+                    <button class="btn primary" onclick="nextTutorialStep()">Next: Using Features →</button>
+                </div>
+            </div>
+
+            <div class="tutorial-step" data-step="6">
+                <h2>Using Room Features 🎯</h2>
+                <p style="margin-bottom: 1.5rem;">Detailed guide on how to use all features within your rooms.</p>
+                
+                <h3>📸 Memories</h3>
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 15px; margin: 1rem 0;">
+                    <strong>Creating Memories:</strong>
+                    <ol style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li>Click <strong>"📸 Memories"</strong> in navigation</li>
+                        <li>Fill in the form:
+                            <ul style="margin-top: 0.5rem;">
+                                <li><strong>Memory Title:</strong> Short name (e.g., "First Date", "Beach Trip")</li>
+                                <li><strong>Description:</strong> Detailed story of the moment</li>
+                                <li><strong>Date:</strong> When it happened (defaults to today)</li>
+                                <li><strong>Photo (Optional):</strong> Click box to upload image (max 5MB)</li>
+                            </ul>
+                        </li>
+                        <li>Click <strong>"Add Memory"</strong></li>
+                        <li>Memory appears at top of list (newest first)</li>
+                        <li>Shows: title, author, date, description, and photo</li>
+                        <li>Images displayed in full quality within the memory card</li>
+                    </ol>
+                    <strong>Tips:</strong>
+                    <ul style="margin-top: 0.5rem;">
+                        <li>Write detailed descriptions - you'll thank yourself later</li>
+                        <li>Compress large images before uploading for faster loading</li>
+                        <li>Use dates to create a timeline of your relationship</li>
+                    </ul>
+                </div>
+
+                <h3>🔗 Links</h3>
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 15px; margin: 1rem 0;">
+                    <strong>Saving Links:</strong>
+                    <ol style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li>Click <strong>"🔗 Links"</strong> in navigation</li>
+                        <li>Fill in the form:
+                            <ul style="margin-top: 0.5rem;">
+                                <li><strong>Link Title:</strong> Descriptive name</li>
+                                <li><strong>URL:</strong> Full web address (include https://)</li>
+                                <li><strong>Description:</strong> Why this link is special or important</li>
+                            </ul>
+                        </li>
+                        <li>Click <strong>"Save Link"</strong></li>
+                        <li>Link appears as clickable card</li>
+                        <li>Clicking title opens URL in new tab</li>
+                        <li>Shows who shared it and when</li>
+                    </ol>
+                    <strong>Use Cases:</strong>
+                    <ul style="margin-top: 0.5rem;">
+                        <li>Shared playlists or videos</li>
+                        <li>Favorite restaurants or travel destinations</li>
+                        <li>Gift ideas and wishlists</li>
+                        <li>Articles or blogs you both enjoy</li>
+                        <li>Shared Google Docs or projects</li>
+                    </ul>
+                </div>
+
+                <h3>📝 Notes</h3>
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 15px; margin: 1rem 0;">
+                    <strong>Writing Notes:</strong>
+                    <ol style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li>Click <strong>"📝 Notes"</strong> in navigation</li>
+                        <li>Fill in the form:
+                            <ul style="margin-top: 0.5rem;">
+                                <li><strong>Note Title:</strong> Subject or topic</li>
+                                <li><strong>Message:</strong> Your note content (longer text supported)</li>
+                                <li><strong>Image (Optional):</strong> Add a visual element (max 5MB)</li>
+                            </ul>
+                        </li>
+                        <li>Click <strong>"Save Note"</strong></li>
+                        <li>Note displayed as card with full content</li>
+                        <li>Perfect for longer messages and thoughts</li>
+                    </ol>
+                    <strong>Ideas:</strong>
+                    <ul style="margin-top: 0.5rem;">
+                        <li>Love letters and romantic messages</li>
+                        <li>Gratitude notes</li>
+                        <li>Future plans and dreams</li>
+                        <li>Apologies or important conversations</li>
+                        <li>Daily thoughts and journal entries</li>
+                        <li>Birthday or anniversary messages</li>
+                    </ul>
+                </div>
+
+                <h3>💬 Chat</h3>
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 15px; margin: 1rem 0;">
+                    <strong>Using Chat:</strong>
+                    <ol style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li>Click <strong>"💬 Chat"</strong> in navigation</li>
+                        <li>Type message in input box at bottom</li>
+                        <li>Press <strong>Enter</strong> or click <strong>"Send"</strong></li>
+                        <li>Messages appear in chat container:
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Your messages: Right side (pink background)</li>
+                                <li>Partner's messages: Left side (blue background)</li>
+                                <li>System messages: Center (gray, italicized)</li>
+                            </ul>
+                        </li>
+                        <li>Auto-scrolls to newest message</li>
+                        <li>Shows username and timestamp for each message</li>
+                        <li>Syncs every 1.5 seconds for near-real-time experience</li>
+                    </ol>
+                    <strong>Tips:</strong>
+                    <ul style="margin-top: 0.5rem;">
+                        <li>Refresh page to force immediate sync</li>
+                        <li>Chat history preserved forever (unless room deleted)</li>
+                        <li>Great for quick messages and ongoing conversations</li>
+                    </ul>
+                </div>
+
+                <h3>🔄 Syncing & Multi-Room Management</h3>
+                <div style="background: #e3f2fd; padding: 1.5rem; border-radius: 15px; margin: 1rem 0;">
+                    <strong>How Syncing Works:</strong>
+                    <ul style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li>Every 1.5 seconds, app checks GitHub for updates</li>
+                        <li>Loads latest room data automatically</li>
+                        <li>Updates all sections (memories, chat, notes, etc.)</li>
+                        <li>Works across all your devices simultaneously</li>
+                        <li>No manual refresh needed!</li>
+                    </ul>
+                    
+                    <strong>Switching Between Rooms:</strong>
+                    <ol style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li>Click <strong>"🏠 Rooms"</strong> in navigation</li>
+                        <li>See all your rooms displayed as cards</li>
+                        <li>Active room highlighted with green border and "✓ Active"</li>
+                        <li>Click any room card to switch to it</li>
+                        <li>System loads that room's data</li>
+                        <li>Navigation updates to show current room name</li>
+                        <li>All features now work for the newly selected room</li>
+                    </ol>
+                </div>
+
+                <h3>⚙️ Settings & Admin Functions</h3>
+                <div style="background: #f3e5f5; padding: 1.5rem; border-radius: 15px; margin: 1rem 0;">
+                    <strong>Room Information:</strong>
+                    <ul style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li>View room name, code, type</li>
+                        <li>See member count and your role</li>
+                        <li>Check creation date</li>
+                    </ul>
+                    
+                    <strong>Admin-Only Features:</strong>
+                    <ul style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li><strong>🏷️ Rename Room:</strong>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Enter new room name</li>
+                                <li>Click "Rename Room"</li>
+                                <li>Name updates everywhere instantly</li>
+                                <li>Room code stays the same</li>
+                            </ul>
+                        </li>
+                        <li><strong>🔔 Approve Join Requests:</strong> (explained in previous step)</li>
+                        <li><strong>🏛️ Freeze/Delete/Leave:</strong> (explained in Room Types step)</li>
+                    </ul>
+                </div>
+                
+                <div class="tutorial-navigation">
+                    <button class="btn" onclick="prevTutorialStep()">← Back</button>
+                    <button class="btn primary" onclick="nextTutorialStep()">Next: Advanced Tips →</button>
+                </div>
+            </div>
+
+            <div class="tutorial-step" data-step="7">
+                <h2>Advanced Tips & Best Practices 💡</h2>
+                <p style="margin-bottom: 1.5rem;">Pro tips to get the most out of Our Space and avoid common issues.</p>
+                
+                <h3>🔐 Security Best Practices</h3>
+                <div style="background: #fff3cd; padding: 1.5rem; border-radius: 15px; margin: 1rem 0; border-left: 4px solid var(--warning);">
+                    <strong>⚠️ Critical Security Tips:</strong>
+                    <ul style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li><strong>Never Share Your PAT:</strong>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Personal Access Token = full access to your GitHub</li>
+                                <li>Don't share it via text, email, or screenshots</li>
+                                <li>Each person should have their own PAT</li>
+                            </ul>
+                        </li>
+                        <li><strong>Keep Repository Private:</strong>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Always use private repos for your data</li>
+                                <li>Public repos = anyone can see your memories</li>
+                                <li>Check repo visibility in GitHub settings</li>
+                            </ul>
+                        </li>
+                        <li><strong>Use Strong GitHub Password:</strong>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Unique password not used elsewhere</li>
+                                <li>Enable 2-factor authentication (2FA)</li>
+                                <li>Protects your GitHub account from unauthorized access</li>
+                            </ul>
+                        </li>
+                        <li><strong>Room Code Privacy:</strong>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Only share room codes with intended members</li>
+                                <li>Anyone with code can request to join</li>
+                                <li>You can deny unwanted requests, but prevention is better</li>
+                            </ul>
+                        </li>
+                        <li><strong>Browser Security:</strong>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Don't use on public/shared computers</li>
+                                <li>Clear browser data if using shared device</li>
+                                <li>Your credentials stored in localStorage</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <h3>💾 Data Management</h3>
+                <div style="background: #e8f5e9; padding: 1.5rem; border-radius: 15px; margin: 1rem 0;">
+                    <strong>Understanding File Sizes:</strong>
+                    <ul style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li><strong>Images:</strong>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Maximum 5MB per image (enforced by app)</li>
+                                <li>Stored as base64 (increases size by ~33%)</li>
+                                <li>Tip: Compress images before uploading</li>
+                                <li>Use tools like TinyPNG or built-in photo editor</li>
+                            </ul>
+                        </li>
+                        <li><strong>File Splitting:</strong>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>App auto-splits data at 50MB per file</li>
+                                <li>Creates multiple numbered files: _1.txt, _2.txt, etc.</li>
+                                <li>Master file tracks all split files</li>
+                                <li>Transparent to you - loads automatically</li>
+                            </ul>
+                        </li>
+                        <li><strong>GitHub Limits:</strong>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Free accounts: 1GB storage total</li>
+                                <li>Individual file limit: 100MB (we stay well under)</li>
+                                <li>Monitor your repo size in GitHub settings</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    
+                    <strong>Backup Strategies:</strong>
+                    <ul style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li><strong>Automatic GitHub Backup:</strong>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>GitHub itself is your primary backup</li>
+                                <li>All commits tracked in Git history</li>
+                                <li>Can view/restore previous versions</li>
+                            </ul>
+                        </li>
+                        <li><strong>Additional Backup:</strong>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Clone your repo locally: <code>git clone [repo-url]</code></li>
+                                <li>All your data downloaded as JSON files</li>
+                                <li>Store on external drive or cloud storage</li>
+                            </ul>
+                        </li>
+                        <li><strong>Export Memories:</strong>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Download files directly from GitHub</li>
+                                <li>JSON format - can open in any text editor</li>
+                                <li>Extract images from base64 if needed</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <h3>🐛 Troubleshooting Common Issues</h3>
+                <div style="background: #ffebee; padding: 1.5rem; border-radius: 15px; margin: 1rem 0;">
+                    <strong>Problem: "Cannot access repository"</strong>
+                    <ul style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li>✓ Check repository name format: <code>username/repo-name</code></li>
+                        <li>✓ Verify PAT hasn't expired (check GitHub settings)</li>
+                        <li>✓ Ensure PAT has "repo" permissions</li>
+                        <li>✓ Confirm repository exists and is accessible</li>
+                        <li>✓ Try generating new PAT if issues persist</li>
+                    </ul>
+                    
+                    <strong>Problem: "Room not found"</strong>
+                    <ul style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li>✓ Verify room code is correct (case-sensitive)</li>
+                        <li>✓ Ensure you're using same/shared GitHub repo</li>
+                        <li>✓ Check with room creator if using separate repos</li>
+                        <li>✓ May need collaborator access to creator's repo</li>
+                    </ul>
+                    
+                    <strong>Problem: Changes not syncing</strong>
+                    <ul style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li>✓ Wait 1.5 seconds for automatic sync</li>
+                        <li>✓ Refresh page to force immediate reload</li>
+                        <li>✓ Check internet connection</li>
+                        <li>✓ Verify GitHub API is accessible</li>
+                        <li>✓ Check browser console for errors (F12)</li>
+                    </ul>
+                    
+                    <strong>Problem: Slow loading</strong>
+                    <ul style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li>✓ Large images cause slower loading</li>
+                        <li>✓ Compress images before uploading</li>
+                        <li>✓ Consider splitting into multiple rooms</li>
+                        <li>✓ Check internet speed</li>
+                    </ul>
+                    
+                    <strong>Problem: Lost credentials</strong>
+                    <ul style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li>✓ Re-enter GitHub repo and PAT</li>
+                        <li>✓ Your data is safe in GitHub</li>
+                        <li>✓ Just reconnect with same credentials</li>
+                        <li>✓ If PAT lost, generate new one with same permissions</li>
+                    </ul>
+                </div>
+
+                <h3>✨ Pro Tips for Best Experience</h3>
+                <div style="background: #e3f2fd; padding: 1.5rem; border-radius: 15px; margin: 1rem 0;">
+                    <strong>Organization:</strong>
+                    <ul style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li>Create separate rooms for different relationships</li>
+                        <li>Use descriptive room names</li>
+                        <li>Add dates to memories for timeline</li>
+                        <li>Use notes for longer thoughts, chat for quick messages</li>
+                    </ul>
+                    
+                    <strong>Performance:</strong>
+                    <ul style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li>Keep images under 2MB when possible</li>
+                        <li>Use modern browsers (Chrome, Firefox, Safari, Edge)</li>
+                        <li>Close unused rooms to reduce memory usage</li>
+                        <li>Clear browser cache if experiencing issues</li>
+                    </ul>
+                    
+                    <strong>Collaboration:</strong>
+                    <ul style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li>Shared repo = easiest collaboration method</li>
+                        <li>Communicate room codes securely</li>
+                        <li>Admins should check notifications regularly</li>
+                        <li>Use chat for coordination and planning</li>
+                    </ul>
+                    
+                    <strong>Privacy:</strong>
+                    <ul style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li>Review what you share before posting</li>
+                        <li>Remember: partner/friend can see everything</li>
+                        <li>Use freeze feature to preserve important memories</li>
+                        <li>Consider separate rooms for different comfort levels</li>
+                    </ul>
+                </div>
+
+                <h3>🆘 Getting Help</h3>
+                <div style="background: #f3e5f5; padding: 1.5rem; border-radius: 15px; margin: 1rem 0;">
+                    <strong>Resources:</strong>
+                    <ul style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li>📖 <strong>This Tutorial:</strong> Click ? button anytime to review</li>
+                        <li>🔧 <strong>GitHub Docs:</strong> help.github.com for repository help</li>
+                        <li>💬 <strong>Browser Console:</strong> Press F12 to check for errors</li>
+                        <li>🔍 <strong>Inspect Files:</strong> View your data directly in GitHub</li>
+                    </ul>
+                    
+                    <strong>Remember:</strong>
+                    <ul style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li>Your data is in YOUR GitHub - you have full control</li>
+                        <li>Files are readable JSON - can be accessed manually</li>
+                        <li>No lock-in - you own your data forever</li>
+                        <li>Free and open - no subscriptions or limits</li>
+                    </ul>
+                </div>
+                
+                <div class="tutorial-navigation">
+                    <button class="btn" onclick="prevTutorialStep()">← Back</button>
+                    <button class="btn primary" onclick="nextTutorialStep()">Next: Quick Reference →</button>
+                </div>
+            </div>
+
+            <div class="tutorial-step" data-step="8">
+                <h2>Quick Reference Guide 📚</h2>
+                <p style="margin-bottom: 1.5rem;">Handy reference for all features and shortcuts.</p>
+                
+                <h3>🎯 Core Workflows</h3>
+                <div style="display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 1rem 0;">
+                    <div style="background: #f8f9fa; padding: 1rem; border-radius: 10px; border-left: 4px solid var(--primary-pink);">
+                        <strong>Creating a Room:</strong>
+                        <p style="font-size: 0.9rem; margin-top: 0.25rem;">Login → + Create New Room → Enter name → Choose type → Create → Share code</p>
+                    </div>
+                    
+                    <div style="background: #f8f9fa; padding: 1rem; border-radius: 10px; border-left: 4px solid var(--soft-blue);">
+                        <strong>Joining a Room:</strong>
+                        <p style="font-size: 0.9rem; margin-top: 0.25rem;">Get code → Join Room → Enter code → Wait for approval → Access granted</p>
+                    </div>
+                    
+                    <div style="background: #f8f9fa; padding: 1rem; border-radius: 10px; border-left: 4px solid var(--success);">
+                        <strong>Switching Rooms:</strong>
+                        <p style="font-size: 0.9rem; margin-top: 0.25rem;">🏠 Rooms → Click any room card → New room loads</p>
+                    </div>
+                    
+                    <div style="background: #f8f9fa; padding: 1rem; border-radius: 10px; border-left: 4px solid var(--warning);">
+                        <strong>Adding Content:</strong>
+                        <p style="font-size: 0.9rem; margin-top: 0.25rem;">Navigate to section → Fill form → Click add button → Content appears</p>
+                    </div>
+                </div>
+
+                <h3>⌨️ Keyboard Shortcuts</h3>
+                <div style="background: #e3f2fd; padding: 1.5rem; border-radius: 15px; margin: 1rem 0;">
+                    <ul style="line-height: 1.8;">
+                        <li><strong>Chat:</strong> Press Enter to send message</li>
+                        <li><strong>Username:</strong> Press Enter to continue</li>
+                        <li><strong>Refresh:</strong> F5 to force sync</li>
+                        <li><strong>Console:</strong> F12 to open developer tools</li>
+                    </ul>
+                </div>
+
+                <h3>📊 File Structure Reference</h3>
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 15px; margin: 1rem 0; font-family: monospace; font-size: 0.9rem;">
+                    <strong>Your GitHub Repository:</strong>
+                    <pre style="margin-top: 0.5rem; line-height: 1.6;">
+📁 your-username/our-space-data
+├── 📄 master_user_john.txt          ← Your room list
+├── 📄 master_user_jane.txt          ← Partner's room list
+├── 📄 ABC123_master.txt             ← Room index
+├── 📄 ABC123_1.txt                  ← Room data
+├── 📄 ABC123_2.txt                  ← Room data (split)
+├── 📄 XYZ789_master.txt             ← Another room
+└── 📄 XYZ789_1.txt                  ← Another room data
+                    </pre>
+                </div>
+
+                <h3>🎨 Visual Indicators</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+                    <div style="background: linear-gradient(135deg, #ffe6e6, #fff0f5); padding: 1rem; border-radius: 10px;">
+                        <strong>💕 Love Rooms</strong>
+                        <ul style="font-size: 0.9rem; margin-top: 0.5rem;">
+                            <li>Pink/purple colors</li>
+                            <li>Heart emoji (💕)</li>
+                            <li>All relationship actions</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #fff9e6, #fffef0); padding: 1rem; border-radius: 10px;">
+                        <strong>👫 Friendship Rooms</strong>
+                        <ul style="font-size: 0.9rem; margin-top: 0.5rem;">
+                            <li>Yellow/warm colors</li>
+                            <li>Friends emoji (👫)</li>
+                            <li>Simple friend actions</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #e8f5e9; padding: 1rem; border-radius: 10px;">
+                        <strong>✓ Active Room</strong>
+                        <ul style="font-size: 0.9rem; margin-top: 0.5rem;">
+                            <li>Green border</li>
+                            <li>Checkmark indicator</li>
+                            <li>Currently selected</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #fff3cd; padding: 1rem; border-radius: 10px;">
+                        <strong>🏛️ Frozen Room</strong>
+                        <ul style="font-size: 0.9rem; margin-top: 0.5rem;">
+                            <li>Orange banner</li>
+                            <li>Read-only mode</li>
+                            <li>No editing allowed</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>⚡ Quick Actions</h3>
+                <table style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
+                    <thead>
+                        <tr style="background: #f8f9fa;">
+                            <th style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">Action</th>
+                            <th style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">How To</th>
+                        </tr>
+                    </thead>
+                    <tbody style="font-size: 0.9rem;">
+                        <tr>
+                            <td style="padding: 0.75rem; border: 1px solid #e0e0e0;"><strong>View Tutorial</strong></td>
+                            <td style="padding: 0.75rem; border: 1px solid #e0e0e0;">Click ? button (top-right)</td>
+                        </tr>
+                        <tr style="background: #f8f9fa;">
+                            <td style="padding: 0.75rem; border: 1px solid #e0e0e0;"><strong>Check Requests</strong></td>
+                            <td style="padding: 0.75rem; border: 1px solid #e0e0e0;">Click 🔔 bell icon (admins only)</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.75rem; border: 1px solid #e0e0e0;"><strong>Rename Room</strong></td>
+                            <td style="padding: 0.75rem; border: 1px solid #e0e0e0;">⚙️ Settings → Enter new name → Rename</td>
+                        </tr>
+                        <tr style="background: #f8f9fa;">
+                            <td style="padding: 0.75rem; border: 1px solid #e0e0e0;"><strong>Switch Rooms</strong></td>
+                            <td style="padding: 0.75rem; border: 1px solid #e0e0e0;">🏠 Rooms → Click room card</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.75rem; border: 1px solid #e0e0e0;"><strong>Logout</strong></td>
+                            <td style="padding: 0.75rem; border: 1px solid #e0e0e0;">Click Logout button (top-right)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>✅ Pre-Flight Checklist</h3>
+                <div style="background: #e8f5e9; padding: 1.5rem; border-radius: 15px; margin: 1rem 0;">
+                    <strong>Before Creating Room:</strong>
+                    <ul style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li>☐ GitHub repository created and private</li>
+                        <li>☐ Personal Access Token generated with 'repo' permissions</li>
+                        <li>☐ Credentials entered and verified</li>
+                        <li>☐ Username chosen and account created</li>
+                        <li>☐ Decided on room name and type</li>
+                    </ul>
+                    
+                    <strong>Before Inviting Partner:</strong>
+                    <ul style="line-height: 1.8; margin-top: 0.5rem;">
+                        <li>☐ Room created successfully</li>
+                        <li>☐ Room code noted (6 characters)</li>
+                        <li>☐ Partner has GitHub credentials ready</li>
+                        <li>☐ Partner knows to request join with code</li>
+                        <li>☐ You're ready to approve their request</li>
+                    </ul>
+                </div>
+
+                <div style="background: linear-gradient(135deg, var(--primary-pink), var(--secondary-lavender)); padding: 2rem; border-radius: 15px; margin: 2rem 0; text-align: center; color: white;">
+                    <h3 style="margin-bottom: 1rem; font-size: 1.5rem;">🎉 You're Ready!</h3>
+                    <p style="font-size: 1.1rem; line-height: 1.6;">
+                        You now know everything to use Our Space effectively.<br>
+                        Create your first room and start building memories!
+                    </p>
+                    <p style="font-size: 0.9rem; margin-top: 1rem; opacity: 0.9;">
+                        Remember: Your data, your control, your privacy. ❤️
+                    </p>
+                </div>
+                
+                <div class="tutorial-navigation">
+                    <button class="btn" onclick="prevTutorialStep()">← Back</button>
+                    <button class="btn primary" onclick="closeTutorial()">Start Using Our Space! 🚀</button>
+                </div>
+            </div><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
